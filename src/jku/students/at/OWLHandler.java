@@ -44,6 +44,10 @@ public class OWLHandler {
         AddAxiom addAxiom = new AddAxiom(ontologyObj, owlAxiom);
         owlManager.applyChange(addAxiom);
 
+        owlAxiom = owlFactory.getOWLSubClassOfAxiom(this.getOntologyClass("FullProfessor"), this.getOntologyClass("VisitingProfessor"));
+        addAxiom = new AddAxiom(ontologyObj, owlAxiom);
+        owlManager.applyChange(addAxiom);
+
         reasoner=new Reasoner.ReasonerFactory().createReasoner(ontologyObj);
 
         for (OWLClass c : reasoner.getEquivalentClasses(this.getOntologyClass("Employee")).getEntities()){
