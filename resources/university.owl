@@ -1,0 +1,252 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#"
+     xml:base="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#AdministrativeStaff -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#AdministrativeStaff">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Employee"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Assistant -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Assistant">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#DepartmentEmloyee"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#AssistantProfessor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#AssistantProfessor">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Professor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#AssociateProfessor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#AssociateProfessor">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Professor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#BachelorStudent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#BachelorStudent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Student"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#ClericalStaff -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#ClericalStaff">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#AdministrativeStaff"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Conference -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Conference">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Work"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Course -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Course">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Work"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Dean -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Dean">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#AdministrativeStaff"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Department -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Department">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Faculty"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#DepartmentEmloyee -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#DepartmentEmloyee">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Employee"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Director -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Director">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#AdministrativeStaff"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#DoctorateStudent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#DoctorateStudent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Student"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Employee -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Employee">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Faculty -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Faculty">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#University"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#FullProfessor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#FullProfessor">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Professor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Lecturer -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Lecturer">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#DepartmentEmloyee"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#MasterStudent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#MasterStudent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Student"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#NonDegreeStudent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#NonDegreeStudent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Student"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Person -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Person"/>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Professor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Professor">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#DepartmentEmloyee"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Research -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Research">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Work"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#ResearchAssistant -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#ResearchAssistant">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Assistant"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Student -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Student">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#SystemsStaff -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#SystemsStaff">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#AdministrativeStaff"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#TeachingAssistant -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#TeachingAssistant">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Assistant"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#University -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#University"/>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#VisitingProfessor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#VisitingProfessor">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Professor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Work -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Work"/>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi -->
+
