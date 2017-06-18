@@ -45,6 +45,10 @@ public class OWLHandler {
         return  owlFactory.getOWLDataProperty(IRI.create(ONTOLOGY_IRI_PREFIX + name));
     }
 
+    private OWLIndividual getOntologyIndividual(String name){
+        return  owlFactory.getOWLNamedIndividual(IRI.create(ONTOLOGY_IRI_PREFIX + name));
+    }
+
     public void addClassToThingAxiom(String clazz){
         OWLAxiom owlAxiom = owlFactory.getOWLSubClassOfAxiom(this.getOntologyClass(clazz), owlFactory.getOWLThing());
         this.addClassAxiom(owlAxiom);
@@ -89,6 +93,9 @@ public class OWLHandler {
         owlManager.applyChange(removeAxiom);
     }
 
+    public void setRangeDomainObjectProperty(String rangeName, String domainName) {
+
+    }
 
     public void execute() throws OWLOntologyCreationException {
 
@@ -98,8 +105,8 @@ public class OWLHandler {
 
         this.addClassToThingAxiom("Hallo");
 
-        this.deleteSubClassAxiom("Faculty", "University");
-        this.deleteSubClassAxiom("Department", "Faculty");
+        //this.deleteSubClassAxiom("Faculty", "University");
+        //this.deleteSubClassAxiom("Department", "Faculty");
         this.deleteClassToThingAxiom("Hallo");
 
         OWLAxiom owlAxiom = owlFactory.getOWLEquivalentClassesAxiom(this.getOntologyClass("Lecturer"), this.getOntologyClass("Professor"));
@@ -107,16 +114,49 @@ public class OWLHandler {
         owlManager.applyChange(addAxiom);
 
         this.addSubClassAxiom("FullProfessor", "VisitingProfessor");
-        this.deleteSubClassAxiom("FullProfessor", "VisitingProfessor");
+        this.addSubClassAxiom("Department", "VisitingProfessor");
+        //this.deleteSubClassAxiom("FullProfessor", "VisitingProfessor");
 
-        reasoner=new Reasoner.ReasonerFactory().createReasoner(ontologyObj);
-        System.out.println("Ontology is consistent: " + reasoner.isConsistent());
+
+        OWLObjectProperty objectProperty = this.getOntologyObjectProperties("hasLecture");
+        OWLAxiom ax = owlFactory.getOWLSubObjectPropertyOfAxiom(objectProperty, owlFactory.getOWLTopObjectProperty());
+        owlManager.applyChange(new AddAxiom(ontologyObj, ax));
+
+
+        //INdividual reading and writing
+        OWLIndividual objectIndividual = this.getOntologyIndividual("Franz");
+        ax = owlFactory.getOWLClassAssertionAxiom(this.getOntologyClass("Student"), objectIndividual);
+        owlManager.applyChange(new AddAxiom(ontologyObj, ax));
+
+        owlAxiom = owlFactory.getOWLObjectPropertyAssertionAxiom(objectProperty, objectIndividual, this.getOntologyIndividual("ITandShit"));
+        owlManager.applyChange(new AddAxiom(ontologyObj, owlAxiom));
+
+
+        reasoner= new Reasoner.ReasonerFactory().createReasoner(ontologyObj);
+
+        Set<OWLClass> cl = ontologyObj.getClassesInSignature();
+        for (OWLClass cl1 : cl){
+            System.out.println(cl1.getIndividuals(ontologyObj));
+        }
+
+
+        ontologyObj.getIndividualsInSignature();
+        ontologyObj.getObjectPropertyAssertionAxioms(objectIndividual);
+        for (OWLObjectPropertyAssertionAxiom a : ontologyObj.getObjectPropertyAssertionAxioms(objectIndividual)){
+            System.out.println(a);
+        }
+
+        //Read Object Properties
+        for(OWLObjectPropertyExpression prop : reasoner.getSubObjectProperties(owlFactory.getOWLTopObjectProperty(), true).getFlattened()){
+            System.out.println(prop.toString());
+        }
 
         for (OWLClass c : reasoner.getEquivalentClasses(this.getOntologyClass("Lecturer")).getEntities()){
             System.out.println(" " + c.getIRI().getFragment());
         }
 
         printHierarchy(reasoner, this.owlFactory.getOWLThing(), 0, new HashSet<OWLClass>());
+        //printHierarchy(reasoner, this.owlFactory.getOWLTopObjectProperty(), 0, new HashSet<OWLObjectProperty>() );
     }
 
     private void printHierarchy(OWLReasoner reasoner, OWLClass clazz, int level, Set<OWLClass> visited){
@@ -134,6 +174,21 @@ public class OWLHandler {
         }
     }
 
+    /*private void printHierarchy1(OWLReasoner reasoner, OWLObjectPropertyExpression clazz, int level, Set<OWLObjectPropertyExpression> visited){
+        if (!visited.contains(clazz) && reasoner.isConsistent()){
+            visited.add(clazz);
+            for (int i = 0; i < level * 4; i++){
+                System.out.print(" ");
+            }
+            System.out.println(labelFor(clazz, reasoner.getRootOntology()));
+
+            NodeSet<OWLObjectPropertyExpression> classes = reasoner.getSubObjectProperties(clazz, true);
+            for (OWLObjectPropertyExpression child : classes.getFlattened()){
+                printHierarchy1(reasoner, child, level + 1, visited);
+            }
+        }
+    }*/
+
     private LabelExtractor le = new LabelExtractor();
 
     private String labelFor(OWLEntity clazz, OWLOntology o) {
@@ -147,6 +202,7 @@ public class OWLHandler {
         return clazz.getIRI().toString();
     }
 }
+
 
 class LabelExtractor extends OWLObjectVisitorExAdapter<String>
         implements OWLAnnotationObjectVisitorEx<String> {

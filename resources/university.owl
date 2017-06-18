@@ -97,6 +97,7 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Department">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#Faculty"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#VisitingProfessor"/>
     </owl:Class>
     
 
