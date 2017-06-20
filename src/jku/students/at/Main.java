@@ -6,10 +6,10 @@ public class Main {
 
     public static void main(String[] args) {
 	// write your code here
-        OWLHandler handler = new OWLHandler();
+
 
         try {
-            handler.load();
+            OWLHandler handler = OWLHandler.getInstance();
             handler.execute();
         } catch (OWLOntologyCreationException e) {
             e.printStackTrace();

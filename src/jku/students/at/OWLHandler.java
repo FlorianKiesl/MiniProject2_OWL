@@ -8,7 +8,9 @@ import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.util.OWLObjectVisitorExAdapter;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -16,21 +18,75 @@ import java.util.Set;
  */
 public class OWLHandler {
 
-    OWLOntologyManager owlManager;
-    OWLDataFactory owlFactory;
-    OWLOntology ontologyObj;
+    private static OWLHandler instance;
+
+    private OWLOntologyManager owlManager;
+    private OWLDataFactory owlFactory;
+    private OWLOntology ontologyObj;
+    private OWLReasoner reasoner;
 
     final IRI ONTOLOGY_IRI_PREFIX = IRI.create("http://www.semanticweb.org/david/ontologies/2017/5/untitled-ontology-5#");
-    final String ONTOLOGY_FILE = "resources/university.owl";
+    final String ONTOLOGY_FILE = "/Users/Florian/IdeaProjects/MiniProject2_OWL/resources/university.owl";
 
-    public OWLHandler(){
-
+    private OWLHandler(){
+        owlManager = OWLManager.createOWLOntologyManager();
+        owlFactory = OWLManager.getOWLDataFactory();
+        try {
+            loadOntology();
+        } catch (OWLOntologyCreationException e) {
+            e.printStackTrace();
+        }
+        reasoner= new Reasoner.ReasonerFactory().createReasoner(ontologyObj);
     }
 
-    public void load() throws OWLOntologyCreationException {
-        this.owlManager = OWLManager.createOWLOntologyManager();
-        this.owlFactory = OWLManager.getOWLDataFactory();
-        this.ontologyObj = owlManager.loadOntologyFromOntologyDocument(new File(ONTOLOGY_FILE));
+    public static OWLHandler getInstance() throws OWLOntologyCreationException {
+        if (instance == null ){
+            instance = new OWLHandler();
+        }
+        return instance;
+    }
+
+    public List<String> getAllClasses(){
+        ArrayList<String> al = new ArrayList<String>();
+        for (OWLClass cl : ontologyObj.getClassesInSignature()){
+            al.add(cl.getIRI().getFragment());
+        }
+        return al;
+    }
+
+    public boolean addIndividuum(String name, String className){
+
+        OWLIndividual objectIndividual = this.getOntologyIndividual(name);
+        OWLAxiom ax = owlFactory.getOWLClassAssertionAxiom(getOntologyClass(className), objectIndividual);
+        owlManager.applyChange(new AddAxiom(ontologyObj, ax));
+        getIndividuen(className);
+
+        return checkReasonerConsitancy();
+    }
+
+    public void saveOntology() throws OWLOntologyStorageException {
+        owlManager.saveOntology(ontologyObj);
+    }
+
+    public void loadOntology() throws OWLOntologyCreationException {
+        ontologyObj = owlManager.loadOntology(IRI.create(new File(ONTOLOGY_FILE)));
+    }
+
+    public List<String> getIndividuen(String className){
+        OWLClass owlClass = this.getOntologyClass(className);
+
+        ArrayList<String> al = new ArrayList<String>();
+        for (OWLIndividual owlIndiv : owlClass.getIndividuals(ontologyObj)){
+            al.add(owlIndiv.asOWLNamedIndividual().getIRI().getFragment());
+            System.out.println(owlIndiv.asOWLNamedIndividual().getIRI().getFragment());
+        }
+
+        return al;
+    }
+
+    private  boolean checkReasonerConsitancy(){
+        reasoner= new Reasoner.ReasonerFactory().createReasoner(ontologyObj);
+        return reasoner.isConsistent();
     }
 
     private OWLClass getOntologyClass(String name){
@@ -84,12 +140,12 @@ public class OWLHandler {
     }
 
     private void addClassAxiom(OWLAxiom owlAxiom){
-        AddAxiom addAxiom = new AddAxiom(ontologyObj, owlAxiom);
+        AddAxiom addAxiom = new AddAxiom(instance.ontologyObj, owlAxiom);
         owlManager.applyChange(addAxiom);
     }
 
     private void deleteClassAxiom(OWLAxiom owlAxiom){
-        RemoveAxiom removeAxiom = new RemoveAxiom(ontologyObj, owlAxiom);
+        RemoveAxiom removeAxiom = new RemoveAxiom(instance.ontologyObj, owlAxiom);
         owlManager.applyChange(removeAxiom);
     }
 
@@ -99,7 +155,7 @@ public class OWLHandler {
 
     public void execute() throws OWLOntologyCreationException {
 
-        OWLReasoner reasoner= new Reasoner.ReasonerFactory().createReasoner(ontologyObj);
+
 
         System.out.println(this.getOntologyClass("Hallo"));
 
@@ -110,7 +166,7 @@ public class OWLHandler {
         this.deleteClassToThingAxiom("Hallo");
 
         OWLAxiom owlAxiom = owlFactory.getOWLEquivalentClassesAxiom(this.getOntologyClass("Lecturer"), this.getOntologyClass("Professor"));
-        AddAxiom addAxiom = new AddAxiom(ontologyObj, owlAxiom);
+        AddAxiom addAxiom = new AddAxiom(instance.ontologyObj, owlAxiom);
         owlManager.applyChange(addAxiom);
 
         this.addSubClassAxiom("FullProfessor", "VisitingProfessor");
@@ -122,7 +178,6 @@ public class OWLHandler {
         OWLAxiom ax = owlFactory.getOWLSubObjectPropertyOfAxiom(objectProperty, owlFactory.getOWLTopObjectProperty());
         owlManager.applyChange(new AddAxiom(ontologyObj, ax));
 
-
         //INdividual reading and writing
         OWLIndividual objectIndividual = this.getOntologyIndividual("Franz");
         ax = owlFactory.getOWLClassAssertionAxiom(this.getOntologyClass("Student"), objectIndividual);
@@ -131,7 +186,7 @@ public class OWLHandler {
         owlAxiom = owlFactory.getOWLObjectPropertyAssertionAxiom(objectProperty, objectIndividual, this.getOntologyIndividual("ITandShit"));
         owlManager.applyChange(new AddAxiom(ontologyObj, owlAxiom));
 
-
+        this.addClassToThingAxiom("Hallo2");
         reasoner= new Reasoner.ReasonerFactory().createReasoner(ontologyObj);
 
         Set<OWLClass> cl = ontologyObj.getClassesInSignature();
@@ -139,8 +194,10 @@ public class OWLHandler {
             System.out.println(cl1.getIndividuals(ontologyObj));
         }
 
+        for (OWLNamedIndividual n : ontologyObj.getIndividualsInSignature()){
+            System.out.println(n.getIRI().getFragment());
+        }
 
-        ontologyObj.getIndividualsInSignature();
         ontologyObj.getObjectPropertyAssertionAxioms(objectIndividual);
         for (OWLObjectPropertyAssertionAxiom a : ontologyObj.getObjectPropertyAssertionAxioms(objectIndividual)){
             System.out.println(a);
@@ -152,6 +209,11 @@ public class OWLHandler {
         }
 
         for (OWLClass c : reasoner.getEquivalentClasses(this.getOntologyClass("Lecturer")).getEntities()){
+            System.out.println(" " + c.getIRI().getFragment());
+        }
+
+        for (OWLClass c : ontologyObj.getClassesInSignature()){
+
             System.out.println(" " + c.getIRI().getFragment());
         }
 

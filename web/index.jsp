@@ -1,4 +1,4 @@
-<%--
+<%@ page import="jku.students.at.OWLHandler" %><%--
   Created by IntelliJ IDEA.
   User: Florian
   Date: 20/06/2017
@@ -11,6 +11,30 @@
     <title>TEST</title>
 </head>
 <body>
+<h1>MiniProject 2 Semantic Web</h1>
+
+<button type="button" onclick="location.href='addIndividuum.jsp'">Add Person</button>
+
+<form action="administerStudent.jsp" method="post">
+
+    <div class="divTable">
+        <div class="divTableBody">
+
+            <div class="divTableRow">
+                <div class="divTableCellFirstColumn">Student:</div>
+                <div class="divTableCell">
+                    <select name="class">
+                        <%
+                            for (String student: OWLHandler.getInstance().getIndividuen("Student")){
+                                out.println("<option value=\"" + student  + "\" selected>" + student + "</option>");
+                            }
+                        %>
+                    </select>
+                </div>
+            </div>
+
+    </div>
+</form>
 
 </body>
 </html>
